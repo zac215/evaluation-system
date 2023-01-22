@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>index</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        .navbar {
+      width: 100%;
+      background-color: #555;
+      overflow: auto;
+    }
+
+    .navbar button{
+      background-color: #555;
+      border: 0px;
+    }
+
+    .navbar a, .navbar button {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar a:hover, .navbar button:hover {
+      background-color: #000;
+    }
+    
+        /* Full-width input fields */
+        input[type=text],
+        input[type=number] {
+            width: 50%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+    
+        /* Add a background color when the inputs get focus */
+        input[type=text]:focus,
+        input[type=number]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+    
+        /* Set a style for all buttons */
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 40%;
+            opacity: 0.9;
+        }
+
+        /*boutton supprimer*/
+        .supprimer{
+            background-color: red;
+        }
+    
+        button:hover {
+            opacity: 1;
+        }
+    
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            padding: 14px 20px;
+            background-color: #f44336;
+        }
+    
+        /* Float cancel and signup buttons and add an equal width */
+        .cancelbtn,
+        .signupbtn {
+            float: left;
+            width: 50%;
+        }
+    
+        /* Add padding to container elements */
+        .container {
+            padding: 16px;
+        }
+    
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: #474e5d;
+            padding-top: 50px;
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto;
+            /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+    
+        /* Style the horizontal ruler */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+    
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+    
+        .close:hover,
+        .close:focus {
+            color: #f44336;
+            cursor: pointer;
+        }
+    
+        /* Clear floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    
+        /* Change styles for cancel button and signup button on extra small screens */
+        @media screen and (max-width: 300px) {
+    
+            .cancelbtn,
+            .signupbtn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a th:href="@{/acceuil}"><i class="fa fa-fw fa-arrow-left"></i> retour </a>
+    </div>
+
+
+    <div align="center">
+        <h1>liste des films</h1>
+        <table border="1px black" class="table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                    <th>films</th>
+                    <th>note moyenne</th>
+                    <th>historique des notes</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each ="critere : ${criteres}">
+                    <td th:text="${critere.designation}">...</td>
+                    <td th:text="${critere.designation}">...</td>
+                    <td><button th:href="@{/historique/${critere.id}}">historique</button></td>
+
+                    <td>
+                        <!-- Button to open the modal -->
+                        <button onclick="document.getElementById('id01').style.display='block'">noter</button>
+
+                        <!-- The Modal (contains the Sign Up form) -->
+                        <div id="id01" class="modal">
+                            <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                                title="Close Modal">times;</span>
+                            <form class="modal-content" th:action="@{/index/addEvaluation}">
+                                <div class="container">
+                                    <h2>notez le film</h2>
+                                    <hr>
+
+                                    <label for="note"><b>note</b></label>
+                                    <input type="number" placeholder="entrez une note sur 5" name="note" required th:field="${evaluationForm.note}"><br>
+                                    
+                                    <div class="clearfix">
+                                        <button type="button"
+                                            onclick="document.getElementById('id01').style.display='none'"
+                                            class="cancelbtn">Annuler</button>
+                                        <button type="submit" class="signup">noter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                    <td><button class="supprimer" onclick="document.getElementById('id01').style.display='block'">supprimer</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        </script>
+</body>
+
+</html>
