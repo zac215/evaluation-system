@@ -44,10 +44,10 @@ On envoie le corps de l'évaluation sous la forme ci-dessus dans une requête po
 	"utilisateur": "KABORE Alex"
 }
 
-### Liste des critère
+### Liste des évaluations
 On envoie une requête GET à localhost:8080/api/evaluation.
 
-### Trouver une évaluation critère
+### Trouver une évaluation 
 On envoie une requête GET à localhost:8080/api/critere/{id} id étant celui du critère.
 
 ### Modifier une évaluation
